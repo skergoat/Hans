@@ -10,11 +10,11 @@ class Recaptcha
 
     function checkRecaptcha()
     {
-        define("RECAPTCHA_V3_SECRET_KEY", '6LcK9cYaAAAAADR267FfpReQg-KA6T_AW14TEGeR');
+        define("RECAPTCHA_V3_SECRET_KEY", '');
 
         $name = filter_input(INPUT_POST, $this->post['nom'], FILTER_VALIDATE_EMAIL);
         $mail = filter_input(INPUT_POST, $this->post['email'], FILTER_SANITIZE_STRING);
-        $password = filter_input(INPUT_POST, $this->post['password'], FILTER_SANITIZE_STRING);
+        // $password = filter_input(INPUT_POST, $this->post['password'], FILTER_SANITIZE_STRING);
         $message = filter_input(INPUT_POST, $this->post['message'], FILTER_SANITIZE_STRING);
         
         $token = $this->post['token'];

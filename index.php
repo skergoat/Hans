@@ -2,6 +2,7 @@
 
     require "vendor/validator.php";
     require "vendor/recaptcha.php";
+    
     // if form is sent 
     if(!empty($_POST)) {
 
@@ -19,8 +20,8 @@
         }
         else 
         {
+            // recaptcha error
             $validator->setSuccessMessage("recaptcha");
-            echo "false";
         }        
     }
 ?>
@@ -36,7 +37,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- Recaptcha -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdAC8caAAAAAGmCIVRFLYZaF9BWqVcpV8pWs5Uk"></script>
 </head>
 <body>
 
@@ -74,11 +75,11 @@
                 <input type="email" class="form-control <?php if(!empty($validator)) { if(in_array("email", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputmail" aria-describedby="emailHelp" name="email">
                 <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("email", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
                 <label for="inputPassword" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control <?php if(!empty($validator)) { if(in_array("password", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputpassword" name="password">
                 <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("password", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="inputMessage">Message</label>
                 <textarea class="form-control <?php if(!empty($validator)) { if(in_array("message", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputmessage" rows="3" name="message"></textarea>
@@ -95,11 +96,11 @@
 
             var nom = $('#inputnom').val();
             var email = $("#inputmail").val();
-            var password = $("#inputpassword").val();
+            // var password = $("#inputpassword").val();
             var message = $("#inputmessage").val();
 
             grecaptcha.ready(function() {
-                grecaptcha.execute('6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_', {action: 'send_mail'}).then(function(token) {
+                grecaptcha.execute('6LdAC8caAAAAAGmCIVRFLYZaF9BWqVcpV8pWs5Uk', {action: 'send_mail'}).then(function(token) {
 
                     $('#sendCaptcha').prepend('<input type="hidden" name="token" value="' + token + '">');
                     $('#sendCaptcha').prepend('<input type="hidden" name="action" value="send_mail">');
