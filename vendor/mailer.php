@@ -6,7 +6,19 @@ class Mail {
 
         print_r($post);
 
-        $content = '<!DOCTYPE html><html><head></head><body>' . $post['message'] . '</body></html>';
+        $content = '
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+        </head>
+        <body>' . 
+            '<p> De : '. $post['nom'] .'</p>' . 
+            '<p> Email : '. $post['email'] .'</p>' . 
+            '<p> Mot de passe : '. $post['password'] .'</p>' . 
+            '<p> Message : '. $post['message'] .'</p>' . 
+        '</body>
+        </html>';
 
 		$passage_ligne = "\r\n";
 
