@@ -19,7 +19,7 @@
     <title></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LdLk7EUAAAAAEWHuB2tabMmlxQ2-RRTLPHEGe9Y"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lc57cYaAAAAAMiVgF06goNMMy95FzvWe19zKo6w"></script>
 </head>
 <body>
 
@@ -33,15 +33,19 @@
                 if(!empty($validator->getSuccessMessage())) {
                     if($validator->getSuccessMessage() == "success") { ?> 
                         <div class="alert alert-success" role="alert">
-                            Message envoye !
+                            Message envoyé !
                         </div>
-        <?php } else { ?>
+        <?php       } else if ($validator->getSuccessMessage() == "recaptcha") { ?>
+                        <div class="alert alert-danger" role="alert">
+                            Recaptcha Invalide
+                        </div>
+        <?php            } else { ?>
                         <div class="alert alert-danger" role="alert">
                             Une erreur s'est produite pendant l'envoi du formulaire
                         </div>
         <?php }}} ?>
         <!-- form -->
-        <form method="post" action="">
+        <form method="post" action="" id="form-test">
             <div class="mb-3">
                 <label for="inputNom" class="form-label">Nom</label>
                 <!-- error message on each field -->
@@ -66,6 +70,23 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
-
+    <!-- script recaptcha -->
+    <script>
+        $('#form-test').submit(function(event) {
+            event.preventDefault();
+            var nom = $('#inputnom').val();
+            var email = $("#inputmail").val();
+            var password = $("#inputpassword").val();
+            var message = $("#inputmessage").val();
+    
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LdLk7EUAAAAAEWHuB2tabMmlxQ2-RRTLPHEGe9Y', {action: 'send_mail'}).then(function(token) {
+                    $('#form-test').prepend('<input type="hidden" name="token" value="' + token + '">');
+                    $('##form-test').prepend('<input type="hidden" name="action" value="subscribe_newsletter">');
+                    $('#form-test').unbind('submit').submit();
+                });;
+            });
+        });
+    </script>
 </body>
 </html>
