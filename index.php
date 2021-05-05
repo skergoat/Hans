@@ -1,31 +1,16 @@
 <?php
 
-    require "vendor/mailer.php";
     require "vendor/validator.php";
 
     if(!empty($_POST)) {
-
-        // get data 
-        $nom = $_POST['nom'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $content = $_POST['message'];
-
-        // validate 
+        // validate and send  
         $validator = new Validator($_POST);
         $validator->isValid();
         
-
         if($validator->isValid()) {
-            $mail = new Mail($nom, $email, $password, $content);
+            $validator->send();
         }
-
-        // print_r($_POST);
     }
-    // else {
-    //     print_r("PAS POST");
-    // }
-
 ?>
 <!doctype html>
 <html lang="fr">

@@ -1,15 +1,39 @@
 <?php 
 
+require "vendor/mailer.php";
+
 class Validator {
 
+    protected $mail;
     protected $post;
     protected $empty;
     protected $emptyKeys;
 
 	public function __construct($post) {
+        $this->mail = new Mail();
         $this->post = $post;
         print_r("Validator");
 	}
+
+    // send mail
+    public function send()
+    {
+        $this->mail->sendMail($this->post);
+    }
+
+    // clean HTML
+    public function specialChars()
+    {  
+        $replacements = array(
+                            "nom" => htmlspecialchars($this->post['nom']), 
+                            "email" => htmlspecialchars($this->post['email']),
+                            "password" => htmlspecialchars($this->post['password']),
+                            "message" => htmlspecialchars($this->post['message'])
+                        );
+
+        $this->post = array_replace($this->post, $replacements);
+        // var_dump($this->post);
+    }
 
     public function errorMessage()
     {
@@ -36,7 +60,12 @@ class Validator {
     // is valid
     public function isValid()
     {
-       return $this->isNotEmpty();
+       // clean HTML 
+       $this->specialChars();
+       // check if empty 
+       if($this->isNotEmpty()) {
+           return true;
+       }
     }
 
     // 

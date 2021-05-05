@@ -2,16 +2,15 @@
 
 class Mail {
 
-	public function __construct($nom, $email, $password, $content) {
-		$this->send($nom, $email, $password, $content);
-	}
 
-	public function send($nom, $email, $password, $content) {
+	public function sendMail($post) {
+
+        print_r($post);
 
 		$passage_ligne = "\r\n";
 
-		$message_txt = $content; 
-		$message_html = '<!DOCTYPE html><html><head></head><body>' . $content . '</body></html>'; 
+		$message_txt = $post['message']; 
+		$message_html = '<!DOCTYPE html><html><head></head><body>' . $post['message'] . '</body></html>'; 
 		
 		$boundary = "-----=".md5(rand());
 		$boundary_alt = "-----=".md5(rand());
