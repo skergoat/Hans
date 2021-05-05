@@ -65,6 +65,9 @@ class Validator {
        $this->specialChars();
        // check if empty 
        if($this->isNotEmpty()) {
+           // if there is no error in fields 
+           // if captcha is ok
+           // then 
            return true;
        }
     }
