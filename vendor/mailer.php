@@ -4,7 +4,7 @@ class Mail {
 
 	public function sendMail($post) {
 
-        print_r($post);
+        // print_r($post);
 
         $content = '
         <!DOCTYPE html>
@@ -53,6 +53,6 @@ class Mail {
 		
 		mail("skergoatweb@gmail.com", "test", $content, $header);
 
-		echo "SENT !"; 
+		return true; 
 	}
 }

@@ -18,7 +18,10 @@ class Validator {
     // send mail
     public function send()
     {
-        $this->mail->sendMail($this->post);
+        if($this->mail->sendMail($this->post))
+        {
+            print_r('message envoye !');
+        }
     }
 
     // clean HTML
