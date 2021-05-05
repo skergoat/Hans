@@ -4,17 +4,17 @@
 
 class Mail {
 
-	public function __construct($nom, $email, $password, $message) {
-		$this->send($nom, $email, $password, $message);
+	public function __construct($nom, $email, $password, $content) {
+		$this->send($nom, $email, $password, $content);
         print_r("OCFRAM");
 	}
 
-	public function send($nom, $email, $password, $message) {
+	public function send($nom, $email, $password, $content) {
 
 		$passage_ligne = "\r\n";
 
-		$message_txt = $message; 
-		$message_html = '<!DOCTYPE html><html><head></head><body>' . $message . '</body></html>'; 
+		$message_txt = $content; 
+		$message_html = '<!DOCTYPE html><html><head></head><body>' . $content . '</body></html>'; 
 		
 		$boundary = "-----=".md5(rand());
 		$boundary_alt = "-----=".md5(rand());
