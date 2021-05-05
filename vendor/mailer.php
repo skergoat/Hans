@@ -13,7 +13,7 @@ class Mail {
         <body>' . 
             '<p> De : '. $data['nom'] .'</p>' . 
             '<p> Email : '. $data['email'] .'</p>' . 
-            '<p> Mot de passe : '. $data['password'] .'</p>' . 
+            // '<p> Mot de passe : '. $data['password'] .'</p>' . 
             '<p> Message : '. $data['message'] .'</p>' . 
         '</body>
         </html>'; 
