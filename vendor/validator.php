@@ -98,4 +98,9 @@ class Validator {
     public function getSuccessMessage() {
         return $this->success;
     }
+
+    // public function setSuccessMessage($message)
+    // {
+    //     $this->success = $message;
+    // }
 }
