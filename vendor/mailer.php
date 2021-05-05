@@ -2,15 +2,16 @@
 
 class Mail {
 
-
 	public function sendMail($post) {
 
         print_r($post);
 
+        $content = '<!DOCTYPE html><html><head></head><body>' . $post['message'] . '</body></html>';
+
 		$passage_ligne = "\r\n";
 
-		$message_txt = $post['message']; 
-		$message_html = '<!DOCTYPE html><html><head></head><body>' . $post['message'] . '</body></html>'; 
+		$message_txt = $content; 
+		$message_html = $content; 
 		
 		$boundary = "-----=".md5(rand());
 		$boundary_alt = "-----=".md5(rand());
@@ -38,10 +39,8 @@ class Mail {
 		 
 		$message.= $passage_ligne."--".$boundary.$passage_ligne;
 		
-		mail("skergoatweb@gmail.com", "test", $content, $header);
+		mail("skergoatweb@gmail.com", "test", $post['message'], $header);
 
 		echo "SENT !"; 
-
 	}
-
 }
