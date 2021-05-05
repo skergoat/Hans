@@ -1,12 +1,9 @@
 <?php 
 
-// namespace CRFram;
-
 class Mail {
 
 	public function __construct($nom, $email, $password, $content) {
 		$this->send($nom, $email, $password, $content);
-        print_r("OCFRAM");
 	}
 
 	public function send($nom, $email, $password, $content) {

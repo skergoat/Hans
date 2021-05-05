@@ -1,21 +1,30 @@
 <?php
 
     require "vendor/mailer.php";
+    require "vendor/validator.php";
 
     if(!empty($_POST)) {
 
+        // get data 
         $nom = $_POST['nom'];
         $email = $_POST['email'];
         $password = $_POST['password'];
         $content = $_POST['message'];
 
-        $mail = new Mail($nom, $email, $password, $content);
+        // validate 
+        $validator = new Validator($_POST);
+        $validator->isValid();
+        
 
-        print_r($_POST);
+        if($validator->isValid()) {
+            $mail = new Mail($nom, $email, $password, $content);
+        }
+
+        // print_r($_POST);
     }
-    else {
-        print_r("PAS POST");
-    }
+    // else {
+    //     print_r("PAS POST");
+    // }
 
 ?>
 <!doctype html>
@@ -34,29 +43,27 @@
         <div class="jumbotron">
             <h1>Mon Formulaire</h1>
         </div>
-       HELLO
         <form method="post" action="">
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="nom">
+                <label for="inputNom" class="form-label">Nom</label>
+                <input type="text" class="form-control <?php if(!empty($validator)) { if(in_array("nom", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputnom" name="nom">
+                <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("nom", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
             <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
-               <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                <label for="inputMail" class="form-label">Email</label>
+                <input type="email" class="form-control <?php if(!empty($validator)) { if(in_array("email", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputmail" aria-describedby="emailHelp" name="email">
+                <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("email", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                <label for="inputPassword" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control <?php if(!empty($validator)) { if(in_array("password", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputpassword" name="password">
+                <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("password", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
             <div class="form-group">
-                <label for="exampleFormControlTextarea1">Message</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
+                <label for="inputMessage">Message</label>
+                <textarea class="form-control <?php if(!empty($validator)) { if(in_array("message", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputmessage" rows="3" name="message"></textarea>
+                <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("message", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
-            <!-- <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div> -->
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
