@@ -1,53 +1,42 @@
 <?php
 
     require "vendor/validator.php";
+    require "vendor/recaptcha.php";
     // if form is sent 
     if(!empty($_POST)) {
-        // if there is no error in fields 
-        // if captcha is ok
-        // define("RECAPTCHA_V3_SECRET_KEY", '');
 
-        // $name = filter_input(INPUT_POST, $_POST['nom'], FILTER_VALIDATE_EMAIL);
-        // $mail = filter_input(INPUT_POST, $_POST['email'], FILTER_SANITIZE_STRING);
-        // $password = filter_input(INPUT_POST, $_POST['password'], FILTER_SANITIZE_STRING);
-        // $message = filter_input(INPUT_POST, $_POST['message'], FILTER_SANITIZE_STRING);
+        $recaptcha = new Recaptcha($_POST);
+        $validator = new Validator($_POST);
         
-        // $token = $_POST['token'];
-        // $action = $_POST['action'];
-        
-        // // call curl to POST request
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL,"https://www.google.com/recaptcha/api/siteverify");
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(array('secret' => RECAPTCHA_V3_SECRET_KEY, 'response' => $token)));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // $response = curl_exec($ch);
-        // curl_close($ch);
-        // $arrResponse = json_decode($response, true);
-        
-        // verify the response
-        // if($arrResponse["success"] == '1' && $arrResponse["action"] == $action && $arrResponse["score"] >= 0.5)  {
-            // $validator->setSuccessMessage("success");
-            $validator = new Validator($_POST);
-            $validator->isValid();
-            // validate and send mail
+        // check recaptcha
+        if($recaptcha->checkRecaptcha())
+        {
+            // validate form 
             if($validator->isValid()) {
+                // send mail
                 $validator->send();
             }
-        // } else {
-        //     $validator->setSuccessMessage("recaptcha");
-        // }   
+        }
+        else 
+        {
+            $validator->setSuccessMessage("recaptcha");
+            echo "false";
+        }        
     }
 ?>
 <!doctype html>
 <html lang="fr">
 <head>
+    <!-- meta, title -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title></title>
+    <title>Mon Formulaire</title>
+    <!-- styles -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_"></script> -->
+    <!-- Recaptcha -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_"></script>
 </head>
 <body>
 
@@ -73,7 +62,7 @@
                         </div>
         <?php }}} ?>
         <!-- form -->
-        <form method="post" action="" id="form-test">
+        <form id="sendCaptcha" method="post" action="" >
             <div class="mb-3">
                 <label for="inputNom" class="form-label">Nom</label>
                 <!-- error message on each field -->
@@ -99,22 +88,31 @@
         </form>
     </div>
     <!-- script recaptcha -->
-    <!-- <script>
-        $('#form-test').submit(function(event) {
+    <script>
+        $('#sendCaptcha').submit(function(event) {
+            // we stoped it
             event.preventDefault();
+
             var nom = $('#inputnom').val();
             var email = $("#inputmail").val();
             var password = $("#inputpassword").val();
             var message = $("#inputmessage").val();
-    
+
             grecaptcha.ready(function() {
                 grecaptcha.execute('6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_', {action: 'send_mail'}).then(function(token) {
-                    $('#form-test').prepend('<input type="hidden" name="token" value="' + token + '">');
-                    $('##form-test').prepend('<input type="hidden" name="action" value="subscribe_newsletter">');
-                    $('#form-test').unbind('submit').submit();
+
+                    $('#sendCaptcha').prepend('<input type="hidden" name="token" value="' + token + '">');
+                    $('#sendCaptcha').prepend('<input type="hidden" name="action" value="send_mail">');
+
+                    setTimeout(function() {
+
+                        $('#sendCaptcha').unbind('submit').submit();
+
+                    }, 500); 
+
                 });;
             });
-        });
-    </script> -->
+        })
+    </script>
 </body>
 </html>

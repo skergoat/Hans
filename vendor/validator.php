@@ -13,7 +13,6 @@ class Validator {
 	public function __construct($post) {
         $this->mail = new Mail();
         $this->post = $post;
-        print_r("Validator");
 	}
 
     // send mail
@@ -99,8 +98,8 @@ class Validator {
         return $this->success;
     }
 
-    // public function setSuccessMessage($message)
-    // {
-    //     $this->success = $message;
-    // }
+    public function setSuccessMessage($message)
+    {
+        $this->success = $message;
+    }
 }
