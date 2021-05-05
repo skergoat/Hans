@@ -24,10 +24,23 @@
 <body>
 
     <div class="container">
-        
+        <!-- title  -->
         <div class="jumbotron">
             <h1>Mon Formulaire</h1>
         </div>
+        <!-- alert -->
+        <?php if(!empty($validator)) { 
+                if(!empty($validator->getSuccessMessage())) {
+                    if($validator->getSuccessMessage() == "success") { ?> 
+                        <div class="alert alert-success" role="alert">
+                            Message envoye !
+                        </div>
+        <?php } else { ?>
+                        <div class="alert alert-danger" role="alert">
+                            Une erreur s'est produite pendant l'envoi du formulaire
+                        </div>
+        <?php }}} ?>
+        <!-- form -->
         <form method="post" action="">
             <div class="mb-3">
                 <label for="inputNom" class="form-label">Nom</label>

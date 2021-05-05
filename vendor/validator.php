@@ -8,6 +8,7 @@ class Validator {
     protected $post;
     protected $empty;
     protected $emptyKeys;
+    protected $success;
 
 	public function __construct($post) {
         $this->mail = new Mail();
@@ -18,10 +19,7 @@ class Validator {
     // send mail
     public function send()
     {
-        if($this->mail->sendMail($this->post))
-        {
-            print_r('message envoye !');
-        }
+        return $this->mail->sendMail($this->post) ? $this->success = 'success' : $this->success = 'error';
     }
 
     // clean HTML
@@ -92,5 +90,9 @@ class Validator {
     public function getEmptyErrorMessage()
     {
         return $this->getErrorMessage("empty");
+    }
+
+    public function getSuccessMessage() {
+        return $this->success;
     }
 }
