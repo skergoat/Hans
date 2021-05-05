@@ -42,7 +42,7 @@ class Mail {
 		 
 		$message.= $passage_ligne."--".$boundary.$passage_ligne;
 		
-		mail("skergoatweb@gmail.com", "test", $header);
+		mail("skergoatweb@gmail.com", "test", $content, $header);
 
 		echo "SENT !"; 
 
