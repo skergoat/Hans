@@ -68,7 +68,7 @@ class Validator {
            // if there is no error in fields 
            // if captcha is ok
 
-           define("RECAPTCHA_V3_SECRET_KEY", '6Lc57cYaAAAAAB_LIsympm_dbkzhgjx20oyuUui4');
+           define("RECAPTCHA_V3_SECRET_KEY", '');
   
             $name = filter_input(INPUT_POST, $this->post['nom'], FILTER_VALIDATE_EMAIL);
             $mail = filter_input(INPUT_POST, $this->post['email'], FILTER_SANITIZE_STRING);

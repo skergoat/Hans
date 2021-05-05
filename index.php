@@ -19,7 +19,7 @@
     <title></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lc57cYaAAAAAMiVgF06goNMMy95FzvWe19zKo6w"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lff8cYaAAAAAPoZTzuSUYTzwxjHDZi3FqOK2W1v"></script>
 </head>
 <body>
 
@@ -80,7 +80,7 @@
             var message = $("#inputmessage").val();
     
             grecaptcha.ready(function() {
-                grecaptcha.execute('6LdLk7EUAAAAAEWHuB2tabMmlxQ2-RRTLPHEGe9Y', {action: 'send_mail'}).then(function(token) {
+                grecaptcha.execute('6Lff8cYaAAAAAPoZTzuSUYTzwxjHDZi3FqOK2W1v', {action: 'send_mail'}).then(function(token) {
                     $('#form-test').prepend('<input type="hidden" name="token" value="' + token + '">');
                     $('##form-test').prepend('<input type="hidden" name="action" value="subscribe_newsletter">');
                     $('#form-test').unbind('submit').submit();
