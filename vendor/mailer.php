@@ -2,11 +2,9 @@
 
 class Mail {
 
-	public function sendMail($post) {
-
-        // print_r($post);
-
-        $content = '
+    public function createMessage($data)
+    {
+        return '
         <!DOCTYPE html>
         <html>
         <head>
@@ -19,6 +17,12 @@ class Mail {
             '<p> Message : '. $post['message'] .'</p>' . 
         '</body>
         </html>';
+    }
+
+	public function sendMail($post) {
+
+        // create message
+        $content = $this->createMessage($post);
 
 		$passage_ligne = "\r\n";
 

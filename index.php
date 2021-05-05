@@ -1,12 +1,11 @@
 <?php
 
     require "vendor/validator.php";
-
+    // if form is sent 
     if(!empty($_POST)) {
-        // validate and send  
         $validator = new Validator($_POST);
         $validator->isValid();
-        
+        // validate and send mail
         if($validator->isValid()) {
             $validator->send();
         }
@@ -44,6 +43,7 @@
         <form method="post" action="">
             <div class="mb-3">
                 <label for="inputNom" class="form-label">Nom</label>
+                <!-- error message on each field -->
                 <input type="text" class="form-control <?php if(!empty($validator)) { if(in_array("nom", $validator->getEmptyMessage())) { ?> is-invalid <?php }} ?>" id="inputnom" name="nom">
                 <div id="validationServer04Feedback" class="invalid-feedback"><?php if(!empty($validator)) { if(in_array("nom", $validator->getEmptyMessage()))  { echo $validator->getEmptyErrorMessage(); }} ?></div>
             </div>
