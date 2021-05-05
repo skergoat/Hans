@@ -11,7 +11,7 @@
 
         $mail = new Mail($nom, $email, $password, $message);
 
-        print_r("POST");
+        print_r($_POST);
     }
     else {
         print_r("PAS POST");
