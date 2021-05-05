@@ -31,7 +31,7 @@ class Mail {
 		$header = "From: \"skergoat.com\"<no-reply@skergoat.com>".$passage_ligne;
 		$header.= "Reply-to: \"skergoat.com\" <no-reply@skergoat.com>".$passage_ligne;
 		$header.= "MIME-Version: 1.0".$passage_ligne;
-		$header.= "Content-Type: multipart/mixed;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+		$header.= 'Content-type: text/html; charset=iso-8859-1'.$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
 		
 		$message = $passage_ligne."--".$boundary.$passage_ligne;
 		$message.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary_alt\"".$passage_ligne;
