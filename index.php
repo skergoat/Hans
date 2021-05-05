@@ -6,7 +6,7 @@
         
         // if there is no error in fields 
         // if captcha is ok
-        define("RECAPTCHA_V3_SECRET_KEY", '6Lff8cYaAAAAAGgMDWHgCyk0LxCMUfZ4P_5MSeg-');
+        define("RECAPTCHA_V3_SECRET_KEY", '');
 
         $name = filter_input(INPUT_POST, $_POST['nom'], FILTER_VALIDATE_EMAIL);
         $mail = filter_input(INPUT_POST, $_POST['email'], FILTER_SANITIZE_STRING);
@@ -47,7 +47,7 @@
     <title></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lff8cYaAAAAAPoZTzuSUYTzwxjHDZi3FqOK2W1v"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_"></script>
 </head>
 <body>
 
@@ -108,7 +108,7 @@
             var message = $("#inputmessage").val();
     
             grecaptcha.ready(function() {
-                grecaptcha.execute('6Lff8cYaAAAAAPoZTzuSUYTzwxjHDZi3FqOK2W1v', {action: 'send_mail'}).then(function(token) {
+                grecaptcha.execute('6LcK9cYaAAAAAKmgbhFpbnJmY_btVh1k3JVkwpQ_', {action: 'send_mail'}).then(function(token) {
                     $('#form-test').prepend('<input type="hidden" name="token" value="' + token + '">');
                     $('##form-test').prepend('<input type="hidden" name="action" value="subscribe_newsletter">');
                     $('#form-test').unbind('submit').submit();
