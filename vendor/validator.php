@@ -108,7 +108,7 @@ class Validator {
     // get and return empty error message 
     public function getEmptyErrorMessage()
     {
-        return $this->getErrorMessage("Remplissez le champ, svp");
+        return "Remplissez le champ, svp";
     }
 
     // display success or error message 

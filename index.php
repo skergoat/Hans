@@ -54,7 +54,7 @@
                         <div class="alert alert-success" role="alert">
                             Message envoyé !
                         </div>
-        <?php       } else if ($validator->getSuccessMessage() == "recaptcha") { ?>
+        <?php      } else if ($validator->getSuccessMessage() == "recaptcha") { ?>
                         <div class="alert alert-danger" role="alert">
                             Recaptcha Invalide
                         </div>
