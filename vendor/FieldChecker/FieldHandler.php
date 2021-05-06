@@ -14,46 +14,42 @@ class FieldHandler
         $this->messageChecker = new MessageChecker($post);
     }
 
+    // check fields 
     public function isValid() 
     {
-        if($this->mailChecker->check())
+        if(!$this->nameChecker->check())
         {
-            print_r("is valid");
+            $arrayErrors[] = $this->nameChecker->getErrors();
         }
-        else 
+        if(!$this->mailChecker->check())
         {
-            $arrayErrors[] = "veuillez rentrer un mail valid, svp";
+            $arrayErrors[] = $this->mailChecker->getErrors();
         }
-
-        if($this->nameChecker->check())
+        if(!$this->messageChecker->check())
         {
-            print_r("is valid");
-        }
-        else 
-        {
-            $arrayErrors[] = "veuillez rentrer un nom valid, svp";
+            foreach($this->messageChecker->getErrors() as $errors)
+            {
+                $arrayErrors[] = $errors;
+            }
         }
 
-        if($this->messageChecker->check())
+        if(!empty($arrayErrors))
         {
-            print_r("is valid");
+            $this->setErrorMessage($arrayErrors);
+            return false;
         }
-        else 
-        {
-            $arrayErrors[] = "veuillez rentrer un message valid, svp";
+        else {
+            return true;
         }
-
-        $this->setErrorMessage($arrayErrors);
-        $this->getErrorMessage();
-
-        return false;
     }
 
+    // set error message 
     public function setErrorMessage(Array $array)
     {
         $this->errorMessage = $array;
     }
 
+    // get error message 
     public function getErrorMessage()
     {
         return $this->errorMessage;

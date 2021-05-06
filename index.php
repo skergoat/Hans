@@ -10,19 +10,19 @@
         $validator = new Validator($_POST);
         
         // check recaptcha
-        // if($recaptcha->checkRecaptcha())
-        // {
+        if($recaptcha->checkRecaptcha())
+        {
             // validate form 
             if($validator->isValid()) {
                 // send mail
                 $validator->send();
             }
-        // }
-        // else 
-        // {
-        //     // recaptcha error
-        //     $validator->setSuccessMessage("recaptcha");
-        // }        
+        }
+        else 
+        {
+            // recaptcha error
+            $validator->setSuccessMessage("recaptcha");
+        }        
     }
 ?>
 <!doctype html>
