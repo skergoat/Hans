@@ -10,19 +10,19 @@
         $validator = new Validator($_POST);
         
         // check recaptcha
-        if($recaptcha->checkRecaptcha())
-        {
+        // if($recaptcha->checkRecaptcha())
+        // {
             // validate form 
             if($validator->isValid()) {
                 // send mail
                 $validator->send();
             }
-        }
-        else 
-        {
-            // recaptcha error
-            $validator->setSuccessMessage("recaptcha");
-        }        
+        // }
+        // else 
+        // {
+        //     // recaptcha error
+        //     $validator->setSuccessMessage("recaptcha");
+        // }        
     }
 ?>
 <!doctype html>
@@ -62,9 +62,20 @@
                         <div class="alert alert-danger" role="alert">
                             Une erreur s'est produite pendant l'envoi du formulaire
                         </div>
-        <?php       }
+        <?php       } 
                 }
-            } ?>
+                else if(!empty($validator->getErrorMessage())) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                       <?php    
+                            foreach($validator->getErrorMessage() as $errorMessage)
+                            { ?>
+                            <li><?= $errorMessage ?></li>
+                            <?php } 
+                        ?>
+                        </ul>
+                    </div>
+        <?php  } } ?>
         <!-- form -->
         <form id="sendCaptcha" method="post" action="" >
             <div class="mb-3">

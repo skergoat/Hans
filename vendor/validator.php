@@ -1,12 +1,16 @@
 <?php 
 
 require "vendor/mailer.php";
-require "vendor/formChecker.php";
+require "vendor/FieldChecker/FieldHandler.php";
+require "vendor/FieldChecker/FieldChecker.php";
+require "vendor/FieldChecker/MailChecker.php";
+require "vendor/FieldChecker/NameChecker.php";
+require "vendor/FieldChecker/MessageChecker.php";
 
 class Validator {
 
     protected $mail;
-    protected $checker;
+    protected $handler;
     protected $post;
     protected $empty;
     protected $emptyKeys;
@@ -17,8 +21,9 @@ class Validator {
         $this->post = $post;
         // clean HTML 
         $this->specialChars();
-        $this->mail = new Mail();
-        $this->checker = new formChecker($this->post);
+        // init Class 
+        $this->handler = new FieldHandler($this->post); // rules to validate fields 
+        $this->mail = new Mail(); // send mail 
 	}
 
     // send mail
@@ -40,26 +45,17 @@ class Validator {
         $this->post = array_replace($this->post, $replacements);
     }
 
+    // set fields error message list 
     public function setErrorMessage($errorMessage)
     {
-        $this->error[] = $errorMessage;
-        print_r($this->error);
+        $this->error = $errorMessage; 
     }
 
-    // public function nameChecker()
-    // {
-    //     return $this->checker->Name() ? true : $this->handleErrorMessage($this->checker->Name()); 
-    // }
-
-    public function mailChecker()
+    // get fields error message list
+    public function getErrorMessage()
     {
-        return $this->checker->Mail() ? true : $this->setErrorMessage("veuillez entrer un mail valide, svp");
+        return $this->error;
     }
-
-    // public function messageChecker()
-    // {
-    //     return $this->checker->Message() ? true : $this->handleErrorMessage($this->checker->Message()); 
-    // }
 
     // create array with empty fields keys 
     public function handleEmptyMessage()
@@ -81,21 +77,15 @@ class Validator {
     // is valid
     public function isValid()
     {
-    //    // clean HTML 
-    //    $this->specialChars();
        // check if empty 
        if($this->isNotEmpty()) {
-        
-            // if($this->nameChecker())
-            // {
-                if($this->mailChecker())
-                {
-                    // if($this->messageChecker())
-                    // {
-                        return true;
-                    // }
-                }  
-            // }
+            // check fields value 
+            if($this->handler->isValid()) {
+                return true;
+            } 
+            else {
+                $this->setErrorMessage($this->handler->getErrorMessage());
+            } 
         }
     }
 
